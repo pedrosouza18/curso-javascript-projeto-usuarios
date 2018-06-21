@@ -129,7 +129,6 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-
       <div class="row">
         <div class="col-md-8">
 
@@ -139,21 +138,8 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
-              <table class="table table-striped" id="table-users">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">Foto</th>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                    <th>Admin</th>
-                    <th>Criado em</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-              </table>
+              <p style="text-align: center;" id="msg">Não há usuários cadastrados</p>
+              <div id="table-users"></div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -204,7 +190,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputName">Nome</label>
-                  <input type="text" class="form-control" id="exampleInputName" placeholder="Digite o nome do usuário" name="name">
+                  <input type="text" class="form-control" required name="name">
                 </div>
                 <div class="form-group">
                   <label>Gênero</label>
@@ -221,11 +207,11 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputBirth">Nascimento</label>
-                  <input type="date" class="form-control" id="exampleInputBirth" name="birth">
+                  <input type="date" required class="form-control" id="exampleInputBirth" name="birth">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputCountry">País</label>
-                  <select class="form-control" id="exampleInputCountry" name="country">
+                  <select class="form-control" required id="exampleInputCountry" name="country">
                     <option value="" selected="selected">Selecione um país</option>
                     <option value="United States">United States</option>
                     <option value="United Kingdom">United Kingdom</option>
@@ -472,15 +458,15 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">E-mail</label>
-                  <input type="email" class="form-control" id="exampleInputEmail" placeholder="Digite o e-mail" name="email">
+                  <input type="email" required class="form-control" id="exampleInputEmail" placeholder="Digite o e-mail" name="email">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Senha</label>
-                  <input type="password" class="form-control" id="exampleInputPassword" placeholder="Crie uma senha" name="password">
+                  <input type="password" required class="form-control" id="exampleInputPassword" placeholder="Crie uma senha" name="password">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile">Foto</label>
-                  <input type="file" id="exampleInputFile" name="photo">
+                  <input type="file" id="exampleInputFile" name="photo" required>
                 </div>
                 <div class="checkbox">
                   <label>
@@ -490,7 +476,7 @@
               </div>
               <!-- /.box-body -->          
               <div class="box-footer">
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success" id="btn-success">Salvar</button>
               </div>
             </form>
           </div>
@@ -515,6 +501,9 @@
 
 </div>
 <script src="models/User.js"></script>
+<script src="models/UsuariosList.js"></script>
+<script src="views/View.js"></script>
+<script src="views/UsuariosView.js"></script>
 <script src="controllers/UserController.js"></script>
 <script src="index.js"></script>
 </body>

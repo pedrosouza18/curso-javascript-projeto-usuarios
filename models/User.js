@@ -39,7 +39,11 @@ class User {
         return this._photo;
     }
 
+    set photo(value) {
+        this._photo = value;
+    }
+
     get admin() {
-        return this._admin === 'on' ? 'Sim': 'Não';
+        return this._admin === true ? 'Sim': 'Não';
     }
 }
