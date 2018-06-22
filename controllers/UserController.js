@@ -8,6 +8,7 @@ class UserController {
         this._listaUsuarios = new UsuariosList();
         this._usuariosView = new UsuariosView($(tableId));
         this._msg = $('#msg');
+        this._totalPeople = $('#total-people');
 
         this._onSubmit();
     }
@@ -44,6 +45,7 @@ class UserController {
                     this._listaUsuarios.adicionar(values);
                     this._msg.style.display = 'none';
                     this._usuariosView.update(this._listaUsuarios);
+                    this._totalPeople.textContent = this._listaUsuarios.usuarios.length;
                     this._clearForm();
                 })
                 .catch(error => console.error(error));
@@ -88,5 +90,10 @@ class UserController {
                 element.checked = false;
             } 
         });
+    }
+
+    removeUser(value) {
+        this._listaUsuarios.remover(value);
+        this._usuariosView.update(this._listaUsuarios);
     }
 }

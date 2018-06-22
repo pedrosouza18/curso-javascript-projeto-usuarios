@@ -11,4 +11,9 @@ class UsuariosList {
     get usuarios() {
         return [].concat(this._usuarios);
     }
+
+    remover(user) {
+        this._usuarios.splice(user, 1);
+    }
+
 }
