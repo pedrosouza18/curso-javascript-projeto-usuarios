@@ -9,6 +9,9 @@ class UserController {
         this._usuariosView = new UsuariosView($(tableId));
         this._msg = $('#msg');
         this._totalPeople = $('#total-people');
+        this._totalAdmin = $('#total-admin');
+
+        this._usuariosView.update(this._listaUsuarios);
 
         this._onSubmit();
     }
@@ -19,13 +22,30 @@ class UserController {
 
         // Tranformo em um arrai e desmembro os elementos com o spread.
         [...this._form.elements].forEach(function(element, idx) {
-            if(element.name == 'gender') {
-                if(element.checked) user[element.name] = element.value;
-            } else if(element.name === 'admin'){
-                user[element.name] = element.checked;
+            
+            if(['name', 'email', 'password', 'birth',' country', 'photo'].indexOf(element.name) > -1 && !element.value) {
+                element.parentElement.classList.add('has-error');
+                return; 
             } else {
-                user[element.name] = element.value;
+                if(element.name == 'name') {
+                    if(this._listaUsuarios.usuarios > 0) {
+                        let sameName = this._listaUsuarios.usuarios.find(value => {
+                            return element.value.split(' ').join('').toLowerCase() === value.split(' ').join('').toLowerCase();
+                        });
+                        console.log(sameName);
+                    }
+                }
+                if(element.name == 'gender') {
+                    if(element.checked) user[element.name] = element.value;
+                } else if(element.name === 'admin'){
+                    user[element.name] = element.checked;
+                } else if(element.name === 'birth') {
+                    user[element.name] = DateHelper.textToDate(element.value);
+                } else {
+                    user[element.name] = element.value;
+                }
             }
+
         });
     
         return new User(user.name, user.gender, user.birth, user.country, user.email, user.password, user.photo, user.admin);
@@ -43,9 +63,8 @@ class UserController {
                 .then(data => {
                     values.photo = data;
                     this._listaUsuarios.adicionar(values);
-                    this._msg.style.display = 'none';
                     this._usuariosView.update(this._listaUsuarios);
-                    this._totalPeople.textContent = this._listaUsuarios.usuarios.length;
+                    this._updateCount();
                     this._clearForm();
                 })
                 .catch(error => console.error(error));
@@ -95,5 +114,13 @@ class UserController {
     removeUser(value) {
         this._listaUsuarios.remover(value);
         this._usuariosView.update(this._listaUsuarios);
+        this._updateCount();
+        
     }
+
+    _updateCount() {
+        this._totalPeople.textContent = this._listaUsuarios.usuarios.length;
+        this._totalAdmin.textContent = this._listaUsuarios.usuarios.filter(element => element.admin).length;        
+    }
+
 }

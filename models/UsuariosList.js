@@ -15,5 +15,4 @@ class UsuariosList {
     remover(user) {
         this._usuarios.splice(user, 1);
     }
-
 }

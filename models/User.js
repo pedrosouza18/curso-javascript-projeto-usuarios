@@ -3,12 +3,13 @@ class User {
     constructor(name, gender, birth, country, email ,password, photo, admin) {
         this._name = name;
         this._gender = gender;
-        this._birth = birth;
+        this._birth = new Date(birth.getTime());
         this._country = country;
         this._email = email;
         this._password = password;
         this._photo = photo;
         this._admin = admin;
+        this._register = new Date();
     }
 
     get name() {
@@ -20,7 +21,7 @@ class User {
     }
 
     get birth() {
-        return this._birth;
+        return new Date(this._birth.getTime());
     }
 
     get country() {
@@ -44,6 +45,10 @@ class User {
     }
 
     get admin() {
-        return this._admin === true ? 'Sim': 'Não';
+        return this._admin;
+    }
+
+    get register() {
+        return this._register;
     }
 }
