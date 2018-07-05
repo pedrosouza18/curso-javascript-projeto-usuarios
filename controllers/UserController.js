@@ -6,7 +6,11 @@ class UserController {
 
         this._form = $(formId);
         this._listaUsuarios = new UsuariosList();
+        this._mensagem = new Mensagem();
+
         this._usuariosView = new UsuariosView($(tableId));
+        this._mensagem = new MensagemView($('#mensagem'));
+
         this._msg = $('#msg');
         this._totalPeople = $('#total-people');
         this._totalAdmin = $('#total-admin');
@@ -27,14 +31,6 @@ class UserController {
                 element.parentElement.classList.add('has-error');
                 return; 
             } else {
-                if(element.name == 'name') {
-                    if(this._listaUsuarios.usuarios > 0) {
-                        let sameName = this._listaUsuarios.usuarios.find(value => {
-                            return element.value.split(' ').join('').toLowerCase() === value.split(' ').join('').toLowerCase();
-                        });
-                        console.log(sameName);
-                    }
-                }
                 if(element.name == 'gender') {
                     if(element.checked) user[element.name] = element.value;
                 } else if(element.name === 'admin'){
@@ -62,10 +58,25 @@ class UserController {
             this._getPhoto()
                 .then(data => {
                     values.photo = data;
-                    this._listaUsuarios.adicionar(values);
-                    this._usuariosView.update(this._listaUsuarios);
-                    this._updateCount();
-                    this._clearForm();
+                    if(this._listaUsuarios.usuarios.length > 0) {                        
+                        let sameName = this._listaUsuarios.usuarios.every(value => {
+                            return values.name.split(' ').join('').toLowerCase() === value.name.split(' ').join('').toLowerCase();
+                        });
+                        if(sameName) {
+                            this._mensagem.mensagem = 'Nome já existente!';
+                            this._mensagem.update(this._mensagem);
+                            return;
+                        };
+                    } else {
+                        this._listaUsuarios.adicionar(values);
+                        this._usuariosView.update(this._listaUsuarios);
+                        this._mensagem.mensagem = 'Usuário adicionado com sucesso!';
+                        this._mensagem.update(this._mensagem);
+                        console.log(this._mensagem.mensagem);
+                        
+                        this._updateCount();
+                        this._clearForm();
+                    }
                 })
                 .catch(error => console.error(error));
 
