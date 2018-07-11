@@ -71,9 +71,7 @@ class UserController {
                         this._listaUsuarios.adicionar(values);
                         this._usuariosView.update(this._listaUsuarios);
                         this._mensagem.mensagem = 'Usuário adicionado com sucesso!';
-                        this._mensagem.update(this._mensagem);
-                        console.log(this._mensagem.mensagem);
-                        
+                        this._mensagem.update(this._mensagem);                        
                         this._updateCount();
                         this._clearForm();
                     }
@@ -132,6 +130,21 @@ class UserController {
     _updateCount() {
         this._totalPeople.textContent = this._listaUsuarios.usuarios.length;
         this._totalAdmin.textContent = this._listaUsuarios.usuarios.filter(element => element.admin).length;        
+    }
+
+    editUser(user) {
+        this._updateStyle('none', 'block');
+    }
+
+    onCancel() {
+        this._updateStyle('block', 'none');
+    }
+
+    _updateStyle(displayCreate, displayUpdate) {
+        let create = document.querySelector('#box-user-create');
+        let update = document.querySelector('#box-user-update');
+        create.style.display = displayCreate;
+        update.style.display = displayUpdate;
     }
 
 }

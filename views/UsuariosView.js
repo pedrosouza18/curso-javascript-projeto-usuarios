@@ -19,7 +19,7 @@ class UsuariosView extends View {
                     </tr>
                 </thead>
                 <tbody>
-                    ${model.usuarios.map(item => {
+                    ${model.usuarios.map((item, idx) => {
                         return `<tr>
                                 <td><img src="${item.photo}" alt="Foto ${item.name}" class="img-circle img-sm"></td>
                                 <td>${item.name}</td>
@@ -27,7 +27,7 @@ class UsuariosView extends View {
                                 <td>${item.admin  === true ? 'Sim': 'Não'}</td>
                                 <td>${DateHelper.dateToText(item.register)}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-xs btn-flat" id="btn-editar">Editar</button>
+                                    <button type="button" class="btn btn-primary btn-xs btn-flat" id="btn-editar" onclick="userController.editUser(${idx})">Editar</button>
                                     <button type="button" class="btn btn-danger btn-xs btn-flat" id="btn-excluir" onclick="userController.removeUser(${model.usuarios.indexOf(item)})">Excluir</button>
                                 </td>
                             </tr>`
